@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  publishChart:
+    docker:
+      - image: web3f/ci-commons:v1.0.0
+    steps:
+      - checkout
+      - run:
+          command: |
+            /scripts/publish-chart.sh
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - publishChart:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
