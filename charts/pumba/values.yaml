@@ -22,3 +22,6 @@ resources:
 
 pumba:
   args: [--random, --interval, "3m", kill, --signal, "SIGKILL"]
+
+# where to find docker socket on host
+dockerSocketPath: /run/containerd/containerd.sock

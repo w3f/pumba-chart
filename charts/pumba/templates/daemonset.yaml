@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-        {{- if not .Values.pumbaSelfKill }}      
+        {{- if not .Values.pumbaSelfKill }}
         com.gaiaadm.pumba: "true"
         {{- end }}
         app.kubernetes.io/name: {{ .Chart.Name }}
@@ -34,20 +34,20 @@ spec:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        args: 
+        args:
     {{- range .Values.pumba.args }}
           - {{ . | quote }}
     {{- end }}
         resources:
-{{ toYaml .Values.resources | indent 10 }}                
+{{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: dockersocket
           mountPath: /var/run/docker.sock
-{{- if .Values.nodeSelector }}          
+{{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | trimSuffix "\n" | indent 10 }}
       {{- end }}
       volumes:
         - hostPath:
-            path: /var/run/docker.sock
+            path: {{ .Values.dockerSocketPath }}
           name: dockersocket
