@@ -5,7 +5,8 @@ image:
 
 pumbaSelfKill: false
 
-nodeSelector: {node-type: node}
+nodeSelector:
+  kubernetes.io/os: linux
 
 tolerations: []
 
