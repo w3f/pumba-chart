@@ -1,3 +1,4 @@
 name: pumba
 version: v0.1.2
 description: Pumba chaos engineering tool Helm chart
+apiVersion: v2

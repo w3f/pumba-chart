@@ -3,17 +3,29 @@ version: 2
 jobs:
   publishChart:
     docker:
-      - image: web3f/ci-commons:v1.0.0
+      - image: web3f/ci-commons:v2.0.1
     steps:
       - checkout
       - run:
           command: |
             /scripts/publish-chart.sh
+  helmLint:
+    docker:
+      - image: web3f/ci-commons:v2.0.1
+    steps:
+      - checkout
+      - run:
+          command: |
+            helm lint ./charts/pumba
 
 workflows:
   version: 2
   test-deploy:
     jobs:
+      - helmLint:
+          filters:
+            tags:
+              only: /.*/      
       - publishChart:
           filters:
             branches:
